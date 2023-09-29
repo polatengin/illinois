@@ -79,6 +79,13 @@ internal class Program
 
     process.WaitForExit();
 
+    if (process.ExitCode == 0)
+    {
+    }
+    else
+    {
+      throw new ArgumentException($"Failed to generate documentation for file: {file}");
+    }
   }
 
   private static void Serve()
