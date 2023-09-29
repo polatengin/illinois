@@ -144,9 +144,10 @@ internal class Program
 
         stream.Write(Encoding.UTF8.GetBytes($"### {name}\n\n- _Type:_ {propertyType}\n\n"));
 
-        foreach (var property in item.Value.EnumerateObject().Where(p => p.Name == "metadata"))
+        var property = item.Value.EnumerateObject().Where(p => p.Name == "metadata");
+        if (property.Any())
         {
-          var description = property.Value.GetProperty("description").GetString();
+          var description = property.First().Value.GetProperty("description").GetString();
 
           stream.Write(Encoding.UTF8.GetBytes($"> {description}\n\n"));
         }
@@ -166,9 +167,10 @@ internal class Program
 
         stream.Write(Encoding.UTF8.GetBytes($"### {name}\n\n- _Type:_ {propertyType}\n- _Name:_ {propertyName}\n\n"));
 
-        foreach (var property in item.Value.EnumerateObject().Where(p => p.Name == "metadata"))
+        var property = item.Value.EnumerateObject().Where(p => p.Name == "metadata");
+        if (property.Any())
         {
-          var description = property.Value.GetProperty("description").GetString();
+          var description = property.First().Value.GetProperty("description").GetString();
 
           stream.Write(Encoding.UTF8.GetBytes($"> {description}\n\n"));
         }
@@ -176,9 +178,9 @@ internal class Program
         if (item.Value.EnumerateObject().Where(p => p.Name == "dependsOn").Select(e => e.Value).Any())
         {
           stream.Write(Encoding.UTF8.GetBytes($"#### Dependencies\n\n"));
-          foreach (var dependency in item.Value.EnumerateObject().Where(p => p.Name == "dependsOn").Select(e => e.Value))
+          foreach (var dependsOn in item.Value.EnumerateObject().Where(p => p.Name == "dependsOn").Select(e => e.Value))
           {
-            dependency.EnumerateArray().ToList().ForEach(dependency =>
+            dependsOn.EnumerateArray().ToList().ForEach(dependency =>
             {
               stream.Write(Encoding.UTF8.GetBytes($"- {dependency}\n"));
             });
@@ -200,10 +202,10 @@ internal class Program
 
         stream.Write(Encoding.UTF8.GetBytes($"### {name}\n\n- _Type:_ {propertyType}\n\n"));
 
-        foreach (var property in item.Value.EnumerateObject().Where(p => p.Name == "metadata"))
+        var property = item.Value.EnumerateObject().Where(p => p.Name == "metadata");
+        if (property.Any())
         {
-          var description = property.Value.GetProperty("description").GetString();
-
+          var description = property.First().Value.GetProperty("description").GetString();
           stream.Write(Encoding.UTF8.GetBytes($"> {description}\n\n"));
         }
       }
