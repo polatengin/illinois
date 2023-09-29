@@ -172,6 +172,19 @@ internal class Program
 
           stream.Write(Encoding.UTF8.GetBytes($"> {description}\n\n"));
         }
+
+        if (item.Value.EnumerateObject().Where(p => p.Name == "dependsOn").Select(e => e.Value).Any())
+        {
+          stream.Write(Encoding.UTF8.GetBytes($"#### Dependencies\n\n"));
+          foreach (var dependency in item.Value.EnumerateObject().Where(p => p.Name == "dependsOn").Select(e => e.Value))
+          {
+            dependency.EnumerateArray().ToList().ForEach(dependency =>
+            {
+              stream.Write(Encoding.UTF8.GetBytes($"- {dependency}\n"));
+            });
+          }
+          stream.Write(Encoding.UTF8.GetBytes($"\n"));
+        }
       }
 
       stream.Write(Encoding.UTF8.GetBytes($"## Outputs\n\n"));
