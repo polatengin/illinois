@@ -136,6 +136,10 @@ internal class Program
         var resourceType = propertyType.Split("/").First();
         var subType = propertyType.Split("/").Last();
 
+        if (resourceType == "Mock.Rp")
+        {
+          continue;
+        }
 
         stream.Write(Encoding.UTF8.GetBytes($"|{propertyType}|[{apiVersion}](https://learn.microsoft.com/en-us/azure/templates/{resourceType}/{apiVersion}/{subType})|\n"));
       }
