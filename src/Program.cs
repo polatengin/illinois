@@ -23,6 +23,7 @@ internal class Program
 
     rootCommand.SetHandler((serve, sort, format, file) =>
     {
+      ValidateOptions(serve, sort, format, file);
       if (serve)
       {
         Serve();
@@ -32,6 +33,20 @@ internal class Program
 
     return await rootCommand.InvokeAsync(args);
   }
+
+  private static void ValidateOptions(bool serve, bool sort, Format format, FileInfo file)
+  {
+    if (format == Format.None)
+    {
+      throw new ArgumentException("output format cannot be none");
+    }
+
+    if (file == null)
+    {
+      throw new ArgumentException("The bicep file option is required");
+    }
+  }
+
   private static void Serve()
   {
       throw new ArgumentException("Serve feature is not implemented yet");
