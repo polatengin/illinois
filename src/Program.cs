@@ -108,12 +108,12 @@ internal class Program
       }
 
       stream.Write(Encoding.UTF8.GetBytes($"## Parameters\n\n"));
-      var parameters = root.parameters.EnumerateObject();
+      var parameters = root.parameters.EnumerateObject().ToList();
       if (sort)
       {
-        parameters.OrderBy(p => p.Name);
+        parameters = parameters.OrderBy(p => p.Name).ToList();
       }
-      foreach (var item in parameters.ToList())
+      foreach (var item in parameters)
       {
         var name = item.Name;
         var propertyType = item.Value.GetProperty("type").GetString();
