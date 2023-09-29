@@ -114,6 +114,24 @@ internal class Program
         stream.Write(Encoding.UTF8.GetBytes($"### {resourceName}\n\n- _Type:_ {resourcePropertyType}\n\n"));
       }
 
+      stream.Write(Encoding.UTF8.GetBytes($"## Resources\n\n"));
+      var resources = root.resources.EnumerateObject();
+      foreach (var item in resources.ToList())
+      {
+        var resourceName = item.Name;
+        var resourcePropertyType = item.Value.GetProperty("type").GetString();
+        var resourcePropertyName = item.Value.GetProperty("name").GetString();
+
+        foreach (var property in item.Value.EnumerateObject().Where(p => p.Name == "metadata"))
+        {
+          var description = property.Value.GetProperty("description").GetString();
+
+          stream.Write(Encoding.UTF8.GetBytes($"> {description}\n\n"));
+        }
+
+        stream.Write(Encoding.UTF8.GetBytes($"### {resourceName}\n\n- _Type:_ {resourcePropertyType}\n- _Name:_ {resourcePropertyName}\n\n"));
+      }
+
     }
     else
     {
