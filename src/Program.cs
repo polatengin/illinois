@@ -69,6 +69,16 @@ internal class Program
   private static void GenerateMarkdownDocumentation(bool sort, FileInfo file)
   {
     var tempFile = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+
+    var process = new Process();
+    process.StartInfo.FileName = "az";
+    process.StartInfo.Arguments = $"bicep build --file {file} --outfile {tempFile}";
+    process.StartInfo.UseShellExecute = false;
+    process.StartInfo.RedirectStandardOutput = false;
+    process.Start();
+
+    process.WaitForExit();
+
   }
 
   private static void Serve()
