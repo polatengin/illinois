@@ -116,6 +116,10 @@ internal class Program
 
       stream.Write(Encoding.UTF8.GetBytes($"## Resources\n\n"));
       var resources = root.resources.EnumerateObject();
+      if (sort)
+      {
+        resources.OrderBy(p => p.Name);
+      }
       foreach (var item in resources.ToList())
       {
         var resourceName = item.Name;
