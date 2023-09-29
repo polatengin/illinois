@@ -91,6 +91,7 @@ internal class Program
 
       var stream = File.Create(file.FullName.Replace(".bicep", ".md"));
 
+      stream.Write(Encoding.UTF8.GetBytes($"# {file.Name}\n\n"));
     }
     else
     {
