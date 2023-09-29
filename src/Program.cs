@@ -161,14 +161,14 @@ internal class Program
         var name = item.Name;
         var propertyType = item.Value.GetProperty("type").GetString();
 
+        stream.Write(Encoding.UTF8.GetBytes($"### {name}\n\n- _Type:_ {propertyType}\n\n"));
+
         foreach (var property in item.Value.EnumerateObject().Where(p => p.Name == "metadata"))
         {
           var description = property.Value.GetProperty("description").GetString();
 
           stream.Write(Encoding.UTF8.GetBytes($"> {description}\n\n"));
         }
-
-        stream.Write(Encoding.UTF8.GetBytes($"### {resourceName}\n\n- _Type:_ {resourcePropertyType}\n\n"));
       }
 
       stream.Close();
