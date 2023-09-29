@@ -54,9 +54,16 @@ internal class Program
   {
     switch (format)
     {
+      case Format.Markdown:
+        GenerateMarkdownDocumentation(sort, file);
+        break;
       default:
         throw new ArgumentException($"Unsupported format: {format}");
     }
+  }
+
+  private static void GenerateMarkdownDocumentation(bool sort, FileInfo file)
+  {
   }
 
   private static void Serve()
