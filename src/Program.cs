@@ -68,6 +68,7 @@ internal class Program
 
   private static void GenerateMarkdownDocumentation(bool sort, FileInfo file)
   {
+    var tempFile = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
   }
 
   private static void Serve()
