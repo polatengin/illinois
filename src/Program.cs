@@ -9,7 +9,7 @@ internal class Program
 {
   private static async Task<int> Main(string[] args)
   {
-    var rootCommand = new RootCommand("Sample app for System.CommandLine");
+    var serveOption = new Option<bool>(aliases: new[] { "--serve" }, description: "The serve to read and display on the console");
     return await rootCommand.InvokeAsync(args);
   }
 }
