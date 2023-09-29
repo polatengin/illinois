@@ -72,6 +72,7 @@ module optionalWithAllParams './module_e.bicep'= {
   }
 }
 
+@description('this is a resource with dependencies')
 resource resWithDependencies 'Mock.Rp/mockResource@2020-01-01' = {
   name: 'harry'
   properties: {
