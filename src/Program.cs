@@ -89,6 +89,8 @@ internal class Program
         throw new ArgumentException($"Failed to deserialize the generated bicep file: {tempFile}");
       }
 
+      var stream = File.Create(file.FullName.Replace(".bicep", ".md"));
+
     }
     else
     {
