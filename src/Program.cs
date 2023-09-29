@@ -116,6 +116,27 @@ internal class Program
 
       stream.Write(Encoding.UTF8.GetBytes($"\n"));
 
+      var resourceTypes = new List<(string, string)>();
+      foreach (var item in root.resources.EnumerateObject())
+      {
+        var propertyType = item.Value.GetProperty("type").GetString();
+        var apiVersion = item.Value.GetProperty("apiVersion").GetString();
+
+        resourceTypes.Add((propertyType, apiVersion));
+      }
+
+      stream.Write(Encoding.UTF8.GetBytes($"## Resource Types\n\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"|Resource Type|API Version|\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"|---|---|\n"));
+      foreach (var item in resourceTypes.Distinct())
+      {
+        var propertyType = item.Item1;
+        var apiVersion = item.Item2;
+
+        stream.Write(Encoding.UTF8.GetBytes($"|{propertyType}|{apiVersion}|\n"));
+      }
+      stream.Write(Encoding.UTF8.GetBytes($"\n\n"));
+
       stream.Write(Encoding.UTF8.GetBytes($"## Variables\n\n"));
       var variables = root.variables.EnumerateObject().ToList();
       if (sort)
