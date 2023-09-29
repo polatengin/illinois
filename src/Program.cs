@@ -136,9 +136,9 @@ internal class Program
       }
       foreach (var item in resources.ToList())
       {
-        var resourceName = item.Name;
-        var resourcePropertyType = item.Value.GetProperty("type").GetString();
-        var resourcePropertyName = item.Value.GetProperty("name").GetString();
+        var name = item.Name;
+        var propertyType = item.Value.GetProperty("type").GetString();
+        var propertyName = item.Value.GetProperty("name").GetString();
 
         foreach (var property in item.Value.EnumerateObject().Where(p => p.Name == "metadata"))
         {
