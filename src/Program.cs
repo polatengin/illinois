@@ -82,6 +82,7 @@ internal class Program
     if (process.ExitCode == 0)
     {
       var rawContent = File.ReadAllText(tempFile);
+      var root = JsonSerializer.Deserialize<Root>(rawContent);
     }
     else
     {
