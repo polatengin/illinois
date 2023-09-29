@@ -23,9 +23,17 @@ internal class Program
 
     rootCommand.SetHandler((serve, sort, format, file) =>
     {
+      if (serve)
+      {
+        Serve();
+      }
     },
     serveOption, sortOption, outputFormatOption, bicepFileOption);
 
     return await rootCommand.InvokeAsync(args);
+  }
+  private static void Serve()
+  {
+      throw new ArgumentException("Serve feature is not implemented yet");
   }
 }
