@@ -83,6 +83,12 @@ internal class Program
     {
       var rawContent = File.ReadAllText(tempFile);
       var root = JsonSerializer.Deserialize<Root>(rawContent);
+
+      if (root == null)
+      {
+        throw new ArgumentException($"Failed to deserialize the generated bicep file: {tempFile}");
+      }
+
     }
     else
     {
