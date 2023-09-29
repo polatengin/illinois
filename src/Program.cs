@@ -92,6 +92,24 @@ internal class Program
       var stream = File.Create(file.FullName.Replace(".bicep", ".md"));
 
       stream.Write(Encoding.UTF8.GetBytes($"# {file.Name}\n\n"));
+
+      stream.Write(Encoding.UTF8.GetBytes($"## Parameters\n\n"));
+      var parameters = root.parameters.EnumerateObject();
+      foreach (var item in parameters.ToList())
+      {
+        var resourceName = item.Name;
+        var resourcePropertyType = item.Value.GetProperty("type").GetString();
+
+        foreach (var property in item.Value.EnumerateObject().Where(p => p.Name == "metadata"))
+        {
+          var description = property.Value.GetProperty("description").GetString();
+
+          stream.Write(Encoding.UTF8.GetBytes($"> {description}\n\n"));
+        }
+
+        stream.Write(Encoding.UTF8.GetBytes($"### {resourceName}\n\n- _Type:_ {resourcePropertyType}\n\n"));
+      }
+
     }
     else
     {
