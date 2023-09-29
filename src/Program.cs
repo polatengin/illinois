@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.CommandLine;
 using System.Text;
 
-internal enum Format
+internal enum OutputFormat
 {
   None,
   Markdown
@@ -15,8 +15,8 @@ internal class Program
   {
     var serveOption = new Option<bool>(aliases: new[] { "--serve" }, description: "Serve the generated documentation on localhost");
     var sortOption = new Option<bool>(aliases: new[] { "--sort" }, description: "Sort members alphabetically");
-    var outputFormatOption = new Option<Format>(aliases: new[] { "--output-format" }, description: "The format to use for the output");
-    var bicepFileOption = new Option<FileInfo>(aliases: new[] { "--bicep-file" }, description: "The format to use for the output");
+    var outputFormatOption = new Option<OutputFormat>(aliases: new[] { "--output-format" }, description: $"The format to use for the output, valid options are ({string.Join(" | ", Enum.GetNames(typeof(OutputFormat)))})");
+    var bicepFileOption = new Option<FileInfo>(aliases: new[] { "--bicep-file" }, description: "Bicep file to generate documentation for");
 
     var rootCommand = new RootCommand("Auto generate documentation for the given bicep file");
 
@@ -41,9 +41,9 @@ internal class Program
     return await rootCommand.InvokeAsync(args);
   }
 
-  private static void ValidateOptions(bool serve, bool sort, Format format, FileInfo file)
+  private static void ValidateOptions(bool serve, bool sort, OutputFormat format, FileInfo file)
   {
-    if (format == Format.None)
+    if (format == OutputFormat.None)
     {
       throw new ArgumentException("output format cannot be none");
     }
@@ -54,11 +54,11 @@ internal class Program
     }
   }
 
-  private static void GenerateDocumentation(bool sort, Format format, FileInfo file)
+  private static void GenerateDocumentation(bool sort, OutputFormat format, FileInfo file)
   {
     switch (format)
     {
-      case Format.Markdown:
+      case OutputFormat.Markdown:
         GenerateMarkdownDocumentation(sort, file);
         break;
       default:
