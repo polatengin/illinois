@@ -81,6 +81,7 @@ internal class Program
 
     if (process.ExitCode == 0)
     {
+      var rawContent = File.ReadAllText(tempFile);
     }
     else
     {
