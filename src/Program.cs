@@ -1,4 +1,8 @@
+using System.Text.Json;
+using System.Diagnostics;
 using System.CommandLine;
+using System.Text;
+
 internal enum Format
 {
   None,
