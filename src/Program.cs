@@ -16,6 +16,12 @@ internal class Program
 
     var rootCommand = new RootCommand("Auto generate documentation for the given bicep file");
 
+    rootCommand.AddOption(serveOption);
+    rootCommand.AddOption(sortOption);
+    rootCommand.AddOption(outputFormatOption);
+    rootCommand.AddOption(bicepFileOption);
+
+
     return await rootCommand.InvokeAsync(args);
   }
 }
