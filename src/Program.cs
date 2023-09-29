@@ -24,6 +24,9 @@ internal class Program
     rootCommand.SetHandler((serve, sort, format, file) =>
     {
       ValidateOptions(serve, sort, format, file);
+
+      GenerateDocumentation(sort, format, file);
+
       if (serve)
       {
         Serve();
@@ -44,6 +47,15 @@ internal class Program
     if (file == null)
     {
       throw new ArgumentException("The bicep file option is required");
+    }
+  }
+
+  private static void GenerateDocumentation(bool sort, Format format, FileInfo file)
+  {
+    switch (format)
+    {
+      default:
+        throw new ArgumentException($"Unsupported format: {format}");
     }
   }
 
