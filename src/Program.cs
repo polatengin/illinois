@@ -17,6 +17,7 @@ internal class Program
     var sortOption = new Option<bool>(aliases: new[] { "--sort" }, description: "Sort members alphabetically");
     var outputFormatOption = new Option<OutputFormat>(aliases: new[] { "--output-format" }, description: $"The format to use for the output, valid options are ({string.Join(" | ", Enum.GetNames(typeof(OutputFormat)))})");
     var bicepFileOption = new Option<FileInfo>(aliases: new[] { "--bicep-file" }, description: "Bicep file to generate documentation for");
+    var outFileOption = new Option<FileInfo>(aliases: new[] { "--outfile" }, description: "Output file to write the generated documentation");
 
     var rootCommand = new RootCommand("Auto generate documentation for the given bicep file");
 
@@ -24,55 +25,56 @@ internal class Program
     rootCommand.AddOption(sortOption);
     rootCommand.AddOption(outputFormatOption);
     rootCommand.AddOption(bicepFileOption);
+    rootCommand.AddOption(outFileOption);
 
-    rootCommand.SetHandler((serve, sort, format, file) =>
+    rootCommand.SetHandler((serve, sort, format, bicepFile, outFile) =>
     {
-      ValidateOptions(serve, sort, format, file);
+      ValidateOptions(serve, sort, format, bicepFile);
 
-      GenerateDocumentation(sort, format, file);
+      GenerateDocumentation(sort, format, bicepFile, outFile);
 
       if (serve)
       {
         Serve();
       }
     },
-    serveOption, sortOption, outputFormatOption, bicepFileOption);
+    serveOption, sortOption, outputFormatOption, bicepFileOption, outFileOption);
 
     return await rootCommand.InvokeAsync(args);
   }
 
-  private static void ValidateOptions(bool serve, bool sort, OutputFormat format, FileInfo file)
+  private static void ValidateOptions(bool serve, bool sort, OutputFormat format, FileInfo bicepFile)
   {
     if (format == OutputFormat.None)
     {
       throw new ArgumentException("output format cannot be none");
     }
 
-    if (file == null)
+    if (bicepFile == null)
     {
       throw new ArgumentException("The bicep file option is required");
     }
   }
 
-  private static void GenerateDocumentation(bool sort, OutputFormat format, FileInfo file)
+  private static void GenerateDocumentation(bool sort, OutputFormat format, FileInfo bicepFile, FileInfo outFile)
   {
     switch (format)
     {
       case OutputFormat.Markdown:
-        GenerateMarkdownDocumentation(sort, file);
+        GenerateMarkdownDocumentation(sort, bicepFile, outFile);
         break;
       default:
         throw new ArgumentException($"Unsupported format: {format}");
     }
   }
 
-  private static void GenerateMarkdownDocumentation(bool sort, FileInfo file)
+  private static void GenerateMarkdownDocumentation(bool sort, FileInfo bicepFile, FileInfo outFile)
   {
     var tempFile = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
 
     var process = new Process();
     process.StartInfo.FileName = "az";
-    process.StartInfo.Arguments = $"bicep build --file {file} --outfile {tempFile}";
+    process.StartInfo.Arguments = $"bicep build --file {bicepFile} --outfile {tempFile}";
     process.StartInfo.UseShellExecute = false;
     process.StartInfo.RedirectStandardOutput = false;
     process.Start();
@@ -89,9 +91,14 @@ internal class Program
         throw new ArgumentException($"Failed to deserialize the generated bicep file: {tempFile}");
       }
 
-      var stream = File.Create(file.FullName.Replace(".bicep", ".md"));
+      if (outFile == null)
+      {
+        outFile = new FileInfo(bicepFile.FullName.Replace(".bicep", ".md"));
+      }
 
-      stream.Write(Encoding.UTF8.GetBytes($"# {file.Name}\n\n"));
+      var stream = File.Create(outFile.FullName);
+
+      stream.Write(Encoding.UTF8.GetBytes($"# {bicepFile.Name}\n\n"));
 
       if (root.metadata != null)
       {
@@ -245,7 +252,7 @@ internal class Program
     }
     else
     {
-      throw new ArgumentException($"Failed to generate documentation for file: {file}");
+      throw new ArgumentException($"Failed to generate documentation for file: {bicepFile}");
     }
   }
 
