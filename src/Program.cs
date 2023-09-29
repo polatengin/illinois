@@ -129,12 +129,12 @@ internal class Program
       }
 
       stream.Write(Encoding.UTF8.GetBytes($"## Resources\n\n"));
-      var resources = root.resources.EnumerateObject();
+      var resources = root.resources.EnumerateObject().ToList();
       if (sort)
       {
-        resources.OrderBy(p => p.Name);
+        resources = resources.OrderBy(p => p.Name).ToList();
       }
-      foreach (var item in resources.ToList())
+      foreach (var item in resources)
       {
         var name = item.Name;
         var propertyType = item.Value.GetProperty("type").GetString();
