@@ -95,6 +95,10 @@ internal class Program
 
       stream.Write(Encoding.UTF8.GetBytes($"## Parameters\n\n"));
       var parameters = root.parameters.EnumerateObject();
+      if (sort)
+      {
+        parameters.OrderBy(p => p.Name);
+      }
       foreach (var item in parameters.ToList())
       {
         var resourceName = item.Name;
