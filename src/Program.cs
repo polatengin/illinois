@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Diagnostics;
 using System.CommandLine;
 using System.Text;
@@ -133,7 +133,11 @@ internal class Program
         var propertyType = item.Item1;
         var apiVersion = item.Item2;
 
-        stream.Write(Encoding.UTF8.GetBytes($"|{propertyType}|{apiVersion}|\n"));
+        var resourceType = propertyType.Split("/").First();
+        var subType = propertyType.Split("/").Last();
+
+
+        stream.Write(Encoding.UTF8.GetBytes($"|{propertyType}|[{apiVersion}](https://learn.microsoft.com/en-us/azure/templates/{resourceType}/{apiVersion}/{subType})|\n"));
       }
       stream.Write(Encoding.UTF8.GetBytes($"\n\n"));
 
