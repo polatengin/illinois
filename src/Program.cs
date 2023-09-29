@@ -13,6 +13,9 @@ internal class Program
     var sortOption = new Option<bool>(aliases: new[] { "--sort" }, description: "Sort members alphabetically");
     var outputFormatOption = new Option<Format>(aliases: new[] { "--output-format" }, description: "The format to use for the output");
     var bicepFileOption = new Option<FileInfo>(aliases: new[] { "--bicep-file" }, description: "The format to use for the output");
+
+    var rootCommand = new RootCommand("Auto generate documentation for the given bicep file");
+
     return await rootCommand.InvokeAsync(args);
   }
 }
