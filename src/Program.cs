@@ -1,4 +1,9 @@
 using System.CommandLine;
+internal enum Format
+{
+  None,
+  Markdown
+}
 
 internal class Program
 {
