@@ -126,6 +126,7 @@ internal class Program
       }
 
       stream.Write(Encoding.UTF8.GetBytes($"## Resource Types\n\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"Resource Types used in the bicep file\n\n"));
       stream.Write(Encoding.UTF8.GetBytes($"|Resource Type|API Version|\n"));
       stream.Write(Encoding.UTF8.GetBytes($"|---|---|\n"));
       foreach (var item in resourceTypes.Distinct())
