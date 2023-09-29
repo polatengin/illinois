@@ -21,6 +21,10 @@ internal class Program
     rootCommand.AddOption(outputFormatOption);
     rootCommand.AddOption(bicepFileOption);
 
+    rootCommand.SetHandler((serve, sort, format, file) =>
+    {
+    },
+    serveOption, sortOption, outputFormatOption, bicepFileOption);
 
     return await rootCommand.InvokeAsync(args);
   }
