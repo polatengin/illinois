@@ -182,7 +182,9 @@ internal class Program
           {
             dependsOn.EnumerateArray().ToList().ForEach(dependency =>
             {
-              stream.Write(Encoding.UTF8.GetBytes($"- {dependency}\n"));
+              var dependencyContent = dependency.GetString() ?? "";
+              var hashLink = dependencyContent.Replace(".", "").Replace("[", "").Replace("]", "").Replace(" ", "-").ToLower();
+              stream.Write(Encoding.UTF8.GetBytes($"- [{dependency}](#{hashLink})\n"));
             });
           }
           stream.Write(Encoding.UTF8.GetBytes($"\n"));
