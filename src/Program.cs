@@ -106,6 +106,19 @@ internal class Program
           stream.Write(Encoding.UTF8.GetBytes($"\n"));
         }
       }
+      stream.Write(Encoding.UTF8.GetBytes($"## Variables\n\n"));
+      var variables = root.variables.EnumerateObject().ToList();
+      if (sort)
+      {
+        variables = variables.OrderBy(p => p.Name).ToList();
+      }
+      foreach (var item in variables)
+      {
+        var name = item.Name;
+
+        stream.Write(Encoding.UTF8.GetBytes($"- {name}\n"));
+      }
+      stream.Write(Encoding.UTF8.GetBytes($"\n"));
 
       stream.Write(Encoding.UTF8.GetBytes($"## Parameters\n\n"));
       var parameters = root.parameters.EnumerateObject().ToList();
