@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Diagnostics;
 using System.CommandLine;
 using System.Text;
@@ -134,8 +134,8 @@ internal class Program
 
       stream.Write(Encoding.UTF8.GetBytes($"## Resource Types\n\n"));
       stream.Write(Encoding.UTF8.GetBytes($"Resource Types used in the bicep file\n\n"));
-      stream.Write(Encoding.UTF8.GetBytes($"|Resource Type|API Version|\n"));
-      stream.Write(Encoding.UTF8.GetBytes($"|---|---|\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"| Resource Type | API Version |\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"| :-- | :-- |\n"));
       foreach (var item in resourceTypes.Distinct())
       {
         var propertyType = item.Item1;
@@ -149,9 +149,9 @@ internal class Program
           continue;
         }
 
-        stream.Write(Encoding.UTF8.GetBytes($"|{propertyType}|[{apiVersion}](https://learn.microsoft.com/en-us/azure/templates/{resourceType}/{apiVersion}/{subType})|\n"));
+        stream.Write(Encoding.UTF8.GetBytes($"| {propertyType} | [{apiVersion}](https://learn.microsoft.com/en-us/azure/templates/{resourceType}/{apiVersion}/{subType}) |\n"));
       }
-      stream.Write(Encoding.UTF8.GetBytes($"\n\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"\n"));
 
       stream.Write(Encoding.UTF8.GetBytes($"## Variables\n\n"));
       var variables = root.variables.EnumerateObject().ToList();
