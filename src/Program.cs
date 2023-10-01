@@ -126,8 +126,8 @@ internal class Program
       var resourceTypes = new List<(string, string)>();
       foreach (var item in root.resources.EnumerateObject())
       {
-        var propertyType = item.Value.GetProperty("type").GetString();
-        var apiVersion = item.Value.GetProperty("apiVersion").GetString();
+        var propertyType = item.Value.GetProperty("type").GetString() ?? "";
+        var apiVersion = item.Value.GetProperty("apiVersion").GetString() ?? "";
 
         resourceTypes.Add((propertyType, apiVersion));
       }
