@@ -35,6 +35,21 @@ Options:
   -?, -h, --help                   Show help and usage information
 ```
 
+## Deploying to Nuget
+
+Compile the project and run the following command from the root of the repository:
+
+```bash
+dotnet pack src/illinois.sln --configuration release
+```
+
+Run the following command to push the package to Nuget:
+
+```bash
+dotnet nuget push src/illinois/bin/release/illinois.0.1.0.nupkg --source https://api.nuget.org/v3/index.json --skip-duplicate --api-key <API_KEY>
+```
+
+
 ```bash
 az bicep build --file ./sample/main.bicep --stdout
 ```
