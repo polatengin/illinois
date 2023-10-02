@@ -132,13 +132,8 @@ output objOutput object = modATest.outputs.objOutput
 output arrayOutput array = modATest.outputs.arrayOutput
 output modCalculatedNameOutput object = moduleWithCalculatedName.outputs.outputObj
 
-/*
-  valid loop cases
-*/
-
 @sys.description('this is myModules')
 var myModules = [
-  // module one that has location eastus2
   {
     name: 'one'
     location: 'eastus2'
@@ -151,7 +146,6 @@ var myModules = [
 
 var emptyArray = []
 
-// simple module loop
 module storageResources 'module_a.bicep' = [for module in myModules: {
   name: module.name
   params: {
@@ -161,7 +155,6 @@ module storageResources 'module_a.bicep' = [for module in myModules: {
   }
 }]
 
-// simple indexed module loop
 module storageResourcesWithIndex 'module_a.bicep' = [for (module, i) in myModules: {
   name: module.name
   params: {
@@ -174,7 +167,6 @@ module storageResourcesWithIndex 'module_a.bicep' = [for (module, i) in myModule
   }
 }]
 
-// nested module loop
 module nestedModuleLoop 'module_a.bicep' = [for module in myModules: {
   name: module.name
   params: {
@@ -184,7 +176,6 @@ module nestedModuleLoop 'module_a.bicep' = [for module in myModules: {
   }
 }]
 
-// duplicate identifiers across scopes are allowed (inner hides the outer)
 module duplicateIdentifiersWithinLoop 'module_a.bicep' = [for x in emptyArray:{
   name: 'hello-${x}'
   params: {
@@ -195,7 +186,6 @@ module duplicateIdentifiersWithinLoop 'module_a.bicep' = [for x in emptyArray:{
   }
 }]
 
-// duplicate identifiers across scopes are allowed (inner hides the outer)
 var duplicateAcrossScopes = 'hello'
 module duplicateInGlobalAndOneLoop 'module_a.bicep' = [for duplicateAcrossScopes in []: {
   name: 'hello-${duplicateAcrossScopes}'
@@ -285,9 +275,6 @@ module propertyLoopInsideParameterValueInsideModuleLoop 'module_a.bicep' = [for 
   }
 }]
 
-
-// BEGIN: Key Vault Secret Reference
-
 resource kv 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
   name: 'testkeyvault'
 }
@@ -313,7 +300,6 @@ module secureModule2 './module_f.bicep' = {
   }
 }
 
-//looped module with looped existing resource (Issue #2862)
 var vaults = [
   {
     vaultName: 'test-1-kv'
@@ -357,8 +343,6 @@ module secureModuleCondition './module_f.bicep' = {
     secureStringParam2: true ? false ? 'false' : kv.getSecret('mySecret','secretVersion') : 'notTrue'
   }
 }
-
-// END: Key Vault Secret Reference
 
 module withSpace 'module_d.bicep' = {
   name: 'withSpace'
