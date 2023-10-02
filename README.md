@@ -1,6 +1,6 @@
-# illinois
+# Bicep Documentation Generator
 
-Bicep documentation generator
+This is a tool to generate documentation for given Bicep files/modules
 
 ```bash
 az bicep build --file ./sample/main.bicep --stdout
