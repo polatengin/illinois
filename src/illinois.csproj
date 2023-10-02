@@ -7,6 +7,11 @@
     <Nullable>enable</Nullable>
 
     <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageId>illinois</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Engin Polat</Authors>
+    <PackageDescription>This is a tool to auto-generate documentation for a given bicep file</PackageDescription>
+    <RepositoryUrl>https://github.com/polatengin/illinois</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
