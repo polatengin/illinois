@@ -49,7 +49,8 @@ Run the following command to push the package to Nuget:
 dotnet nuget push src/illinois/bin/release/illinois.0.1.0.nupkg --source https://api.nuget.org/v3/index.json --skip-duplicate --api-key <API_KEY>
 ```
 
+### Clear package cache
 
 ```bash
-az bicep build --file ./sample/main.bicep --stdout
+dotnet nuget locals all --clear
 ```
