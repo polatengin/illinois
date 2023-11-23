@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Diagnostics;
 using System.CommandLine;
 using System.Text;
@@ -116,6 +116,7 @@ internal class Program
 
       stream.Write(Encoding.UTF8.GetBytes($"## Table of Contents\n\n"));
 
+      stream.Write(Encoding.UTF8.GetBytes($"- [Resource Types](#resource-types)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Variables](#variables)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Parameters](#parameters)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Resources](#resources)\n"));
