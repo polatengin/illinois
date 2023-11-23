@@ -212,7 +212,7 @@ internal class Program
 
         stream.Write(Encoding.UTF8.GetBytes($"| {name} | {propertyType} | {description} |"));
       }
-      stream.Write(Encoding.UTF8.GetBytes($"\n\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"\n"));
 
       stream.Write(Encoding.UTF8.GetBytes($"## Resources\n\n"));
       var resources = root.resources.EnumerateObject().ToList();
