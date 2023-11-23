@@ -210,7 +210,7 @@ internal class Program
           description = property.First().Value.GetProperty("description").GetString();
         }
 
-        stream.Write(Encoding.UTF8.GetBytes($"| {name} | {propertyType} | {description} |"));
+        stream.Write(Encoding.UTF8.GetBytes($"| {name} | {propertyType} | {description} |\n"));
       }
       stream.Write(Encoding.UTF8.GetBytes($"\n"));
 
