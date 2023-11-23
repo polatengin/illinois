@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Diagnostics;
 using System.CommandLine;
 using System.Text;
@@ -118,7 +118,8 @@ internal class Program
 
       stream.Write(Encoding.UTF8.GetBytes($"- [Resource Types](#resource-types)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Variables](#variables)\n"));
-      stream.Write(Encoding.UTF8.GetBytes($"- [Parameters](#parameters)\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"- [Required Parameters](#required-parameters)\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"- [Optional Parameters](#optional-parameters)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Resources](#resources)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Outputs](#outputs)\n"));
 
@@ -165,27 +166,53 @@ internal class Program
         stream.Write(Encoding.UTF8.GetBytes($"<details>\n<summary>{item.Name}</summary>\nDefault value: {item.Value}\n</details>\n\n"));
       }
 
-      stream.Write(Encoding.UTF8.GetBytes($"## Parameters\n\n"));
-      var parameters = root.parameters.EnumerateObject().ToList();
+      stream.Write(Encoding.UTF8.GetBytes($"## Required Parameters\n\n"));
+      var required_parameters = root.parameters.EnumerateObject().Where(e => e.Value.TryGetProperty("defaultValue", out _) == false).ToList();
       if (sort)
       {
-        parameters = parameters.OrderBy(p => p.Name).ToList();
+        required_parameters = required_parameters.OrderBy(p => p.Name).ToList();
       }
-      foreach (var item in parameters)
+      stream.Write(Encoding.UTF8.GetBytes($"| Parameter Name | Type | Description |\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"| :-- | :-- | :-- |\n"));
+      foreach (var item in required_parameters)
       {
         var name = item.Name;
         var propertyType = item.Value.GetProperty("type").GetString();
-
-        stream.Write(Encoding.UTF8.GetBytes($"### {name}\n\n- _Type:_ {propertyType}\n\n"));
-
         var property = item.Value.EnumerateObject().Where(p => p.Name == "metadata");
+        var description = "";
+
         if (property.Any())
         {
-          var description = property.First().Value.GetProperty("description").GetString();
-
-          stream.Write(Encoding.UTF8.GetBytes($"> {description}\n\n"));
+          description = property.First().Value.GetProperty("description").GetString();
         }
+
+        stream.Write(Encoding.UTF8.GetBytes($"| {name} | {propertyType} | {description} |"));
       }
+      stream.Write(Encoding.UTF8.GetBytes($"\n\n"));
+
+      stream.Write(Encoding.UTF8.GetBytes($"## Optional Parameters\n\n"));
+      var optional_parameters = root.parameters.EnumerateObject().Where(e => e.Value.TryGetProperty("defaultValue", out _) == true).ToList();
+      if (sort)
+      {
+        optional_parameters = optional_parameters.OrderBy(p => p.Name).ToList();
+      }
+      stream.Write(Encoding.UTF8.GetBytes($"| Parameter Name | Type | Default Value | Allowed Values | Description |\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"| :-- | :-- | :-- |\n"));
+      foreach (var item in optional_parameters)
+      {
+        var name = item.Name;
+        var propertyType = item.Value.GetProperty("type").GetString();
+        var property = item.Value.EnumerateObject().Where(p => p.Name == "metadata");
+        var description = "";
+
+        if (property.Any())
+        {
+          description = property.First().Value.GetProperty("description").GetString();
+        }
+
+        stream.Write(Encoding.UTF8.GetBytes($"| {name} | {propertyType} | {description} |"));
+      }
+      stream.Write(Encoding.UTF8.GetBytes($"\n\n"));
 
       stream.Write(Encoding.UTF8.GetBytes($"## Resources\n\n"));
       var resources = root.resources.EnumerateObject().ToList();
