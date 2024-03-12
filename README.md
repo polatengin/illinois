@@ -16,6 +16,8 @@ dotnet tool install -g illinois
 dotnet run --project src/illinois.csproj -- --output-format markdown --bicep-file ./sample/main.bicep --sort
 ```
 
+> _Output of the command can be found in https://gist.github.com/polatengin/df3583b4f6b82432d5e926874e43bf89_
+
 ## Usage
 
 ```text
