@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Diagnostics;
 using System.CommandLine;
 using System.Text;
@@ -118,10 +118,10 @@ internal class Program
       stream.Write(Encoding.UTF8.GetBytes($"\n"));
 
       var resourceTypes = new List<(string, string)>();
-      foreach (var item in root.resources.EnumerateObject())
+      foreach (var item in root.resources.EnumerateObject().Select(e => e.Value))
       {
-        var propertyType = item.Value.GetProperty("type").GetString() ?? "";
-        var apiVersion = item.Value.GetProperty("apiVersion").GetString() ?? "";
+        var propertyType = item.GetProperty("type").GetString() ?? "";
+        var apiVersion = item.GetProperty("apiVersion").GetString() ?? "";
 
         resourceTypes.Add((propertyType, apiVersion));
       }
