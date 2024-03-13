@@ -191,7 +191,7 @@ internal class Program
         optional_parameters = optional_parameters.OrderBy(p => p.Name).ToList();
       }
       stream.Write(Encoding.UTF8.GetBytes($"| Parameter Name | Type | Default Value | Allowed Values | Description |\n"));
-      stream.Write(Encoding.UTF8.GetBytes($"| :-- | :-- | :-- |\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"| :-- | :-- | :-- | :-- | :-- |\n"));
       foreach (var item in optional_parameters)
       {
         var name = item.Name;
