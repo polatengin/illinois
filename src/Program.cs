@@ -135,8 +135,10 @@ internal class Program
         var propertyType = item.Item1;
         var apiVersion = item.Item2;
 
-        var resourceType = propertyType.Split("/").First();
-        var subType = propertyType.Split("/").Last();
+        var propertyParts = propertyType.Split("/");
+
+        var resourceType = propertyParts[0];
+        var subType = propertyParts.Last();
 
         if (resourceType == "Mock.Rp")
         {
