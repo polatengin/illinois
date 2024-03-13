@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Diagnostics;
 using System.CommandLine;
 using System.Text;
@@ -275,6 +275,6 @@ internal class Program
 
   private static void Serve()
   {
-      throw new ArgumentException("Serve feature is not implemented yet");
+    throw new ArgumentException("Serve feature is not implemented yet");
   }
 }
