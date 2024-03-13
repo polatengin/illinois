@@ -95,18 +95,15 @@ internal class Program
 
       stream.Write(Encoding.UTF8.GetBytes($"# {bicepFile.Name}\n\n"));
 
-      if (root.metadata != null)
+      if (root.metadata != null && root.metadata._EXPERIMENTAL_FEATURES_ENABLED.Any())
       {
-        if (root.metadata._EXPERIMENTAL_FEATURES_ENABLED.Any())
+        stream.Write(Encoding.UTF8.GetBytes($"> {root.metadata._EXPERIMENTAL_WARNING}\n\n"));
+        stream.Write(Encoding.UTF8.GetBytes($"_Enabled experimental features:_\n\n"));
+        foreach (var item in root.metadata._EXPERIMENTAL_FEATURES_ENABLED)
         {
-          stream.Write(Encoding.UTF8.GetBytes($"> {root.metadata._EXPERIMENTAL_WARNING}\n\n"));
-          stream.Write(Encoding.UTF8.GetBytes($"_Enabled experimental features:_\n\n"));
-          foreach (var item in root.metadata._EXPERIMENTAL_FEATURES_ENABLED)
-          {
-            stream.Write(Encoding.UTF8.GetBytes($"- {item}\n"));
-          }
-          stream.Write(Encoding.UTF8.GetBytes($"\n"));
+          stream.Write(Encoding.UTF8.GetBytes($"- {item}\n"));
         }
+        stream.Write(Encoding.UTF8.GetBytes($"\n"));
       }
 
       stream.Write(Encoding.UTF8.GetBytes($"## Table of Contents\n\n"));
