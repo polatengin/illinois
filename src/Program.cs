@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Diagnostics;
 using System.CommandLine;
 using System.Text;
@@ -70,7 +70,7 @@ internal class Program
 
   private static void GenerateMarkdownDocumentation(bool sort, FileInfo bicepFile, FileInfo outFile)
   {
-    var tempFile = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+    var tempFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 
     var process = new Process();
     process.StartInfo.FileName = "az";
