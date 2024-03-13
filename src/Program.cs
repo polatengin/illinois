@@ -70,6 +70,10 @@ internal class Program
 
   private static void GenerateMarkdownDocumentation(bool sort, FileInfo bicepFile, FileInfo outFile)
   {
+    string sanitizeName(string name) {
+      return name.Replace("[", "").Replace("]", "").Replace("{", "").Replace("}", "").Replace("(", "").Replace(")", "").Replace(" ", "-").Trim();
+    }
+
     var tempFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 
     var process = new Process();
