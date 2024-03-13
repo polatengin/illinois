@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Diagnostics;
 using System.CommandLine;
 using System.Text;
@@ -84,12 +84,7 @@ internal class Program
     if (process.ExitCode == 0)
     {
       var rawContent = File.ReadAllText(tempFile);
-      var root = JsonSerializer.Deserialize<Root>(rawContent);
-
-      if (root == null)
-      {
-        throw new ArgumentException($"Failed to deserialize the generated bicep file: {tempFile}");
-      }
+      var root = JsonSerializer.Deserialize<Root>(rawContent) ?? throw new ArgumentException($"Failed to deserialize the generated bicep file: {tempFile}");
 
       if (outFile == null)
       {
