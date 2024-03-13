@@ -112,6 +112,7 @@ internal class Program
 
       stream.Write(Encoding.UTF8.GetBytes($"## Table of Contents\n\n"));
 
+      stream.Write(Encoding.UTF8.GetBytes($"- [Diagram](#diagram)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Resource Types](#resource-types)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Variables](#variables)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Required Parameters](#required-parameters)\n"));
@@ -129,6 +130,28 @@ internal class Program
 
         resourceTypes.Add((propertyType, apiVersion));
       }
+
+      stream.Write(Encoding.UTF8.GetBytes($"## Diagram\n\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"```mermaid\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"graph TD;\n"));
+      foreach (var item in root.resources.EnumerateObject())
+      {
+        var name = item.Value.GetProperty("name").GetString() ?? "";
+
+        if (name.Contains("[format"))
+        {
+          name = item.Name;
+        }
+
+        item.Value.EnumerateObject().Where(p => p.Name == "dependsOn").Select(e => e.Value).ToList().ForEach(dependency =>
+        {
+          dependency.EnumerateArray().ToList().ForEach(dep =>
+          {
+            stream.Write(Encoding.UTF8.GetBytes($"  {sanitizeName(dep.GetString() ?? "")} --> {sanitizeName(name)};\n"));
+          });
+        });
+      }
+      stream.Write(Encoding.UTF8.GetBytes($"```\n\n"));
 
       stream.Write(Encoding.UTF8.GetBytes($"## Resource Types\n\n"));
       stream.Write(Encoding.UTF8.GetBytes($"Resource Types used in the bicep file\n\n"));
