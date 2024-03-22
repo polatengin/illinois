@@ -1,4 +1,5 @@
 name: illinois
+base: core18
 version: "0.1"
 summary: Bicep documentation generator
 description: |
