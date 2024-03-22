@@ -8,5 +8,5 @@ grade: stable
 confinement: devmode
 
 parts:
-  my-part:
+  illinois:
     plugin: nil
