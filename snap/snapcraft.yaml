@@ -6,7 +6,7 @@ description: |
   Bicep documentation generator
 
 grade: stable
-confinement: devmode
+confinement: classic
 
 parts:
   illinois:
