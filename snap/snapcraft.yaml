@@ -1,5 +1,5 @@
 name: illinois
-version: '0.1'
+version: "0.1"
 summary: Bicep documentation generator
 description: |
   Bicep documentation generator
