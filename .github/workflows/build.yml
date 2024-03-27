@@ -54,17 +54,18 @@ jobs:
     - name: Create Release
       id: create_release
       run: |
-        # Create the release using GitHub API
         response=$(curl -X POST \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/${{ github.repository }}/releases \
           -d "{\"tag_name\":\"${{ github.ref }}\",\"name\":\"Release ${{ github.ref }}\",\"body\":\"Changes in this release:\n- Describe your changes here\",\"draft\":false,\"prerelease\":false}")
 
-        # Extract the upload URL from the response
+        echo "$response"
+
         upload_url=$(echo "$response" | jq -r '.upload_url' | sed 's/{?name,label}//')
 
-        # Upload the asset
+        echo "$upload_url"
+
         curl \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Content-Type: application/x-deb" \
