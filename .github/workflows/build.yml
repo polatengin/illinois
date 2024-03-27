@@ -30,11 +30,11 @@ jobs:
 
     - name: Prepare debian package
       run: |
-        sed -i "s/\$\$AUTHOR\$\$/$GITHUB_ACTOR/g" ./debian/DEBIAN/control
-        sed -i "s/\$\$EMAIL\$\$/$GITHUB_ACTOR\@users.noreply.github.com/g" ./debian/DEBIAN/control
+        sed -i "s/\$\$AUTHOR\$\$/$GITHUB_ACTOR/g" ./DEBIAN/control
+        sed -i "s/\$\$EMAIL\$\$/$GITHUB_ACTOR\@users.noreply.github.com/g" ./DEBIAN/control
 
     - name: Create debian package
-      run: dpkg-deb --build ./debian ./bin/illinois.deb
+      run: dpkg-deb --build ./DEBIAN ./bin/illinois.deb
 
     - name: Upload debian package
       uses: actions/upload-artifact@v2
