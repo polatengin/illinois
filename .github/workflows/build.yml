@@ -30,6 +30,7 @@ jobs:
 
     - name: Prepare debian package
       run: |
+        sed -i "s/{COMMIT}/${GITHUB_RUN_ID}/g" ./DEBIAN/control
         sed -i "s/{AUTHOR}/${GITHUB_ACTOR}/g" ./DEBIAN/control
         sed -i "s/{EMAIL}/${GITHUB_ACTOR}@users.noreply.github.com/g" ./DEBIAN/control
 
