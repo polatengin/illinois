@@ -35,3 +35,9 @@ jobs:
 
     - name: Create debian package
       run: dpkg-deb --build ./debian ./bin/illinois.deb
+
+    - name: Upload debian package
+      uses: actions/upload-artifact@v2
+      with:
+        name: illinois
+        path: ./bin/illinois.deb
