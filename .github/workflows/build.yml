@@ -34,7 +34,7 @@ jobs:
         sed -i "s/\$\$EMAIL\$\$/$GITHUB_ACTOR\@users.noreply.github.com/g" ./DEBIAN/control
 
     - name: Create debian package
-      run: dpkg-deb --build ./DEBIAN ./bin/illinois.deb
+      run: dpkg-deb --build ./ ./bin/illinois.deb
 
     - name: Upload debian package
       uses: actions/upload-artifact@v2
