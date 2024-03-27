@@ -30,8 +30,8 @@ jobs:
 
     - name: Prepare debian package
       run: |
-        sed -i "s/\$\$AUTHOR\$\$/$GITHUB_ACTOR/g" ./DEBIAN/control
-        sed -i "s/\$\$EMAIL\$\$/$GITHUB_ACTOR\@users.noreply.github.com/g" ./DEBIAN/control
+        sed -i "s/{AUTHOR}/${GITHUB_ACTOR}/g"
+        sed -i "s/{EMAIL}/${GITHUB_ACTOR}@users.noreply.github.com/g" ./DEBIAN/control
 
     - name: Create debian package
       run: dpkg-deb --build ./ ./bin/illinois.deb
