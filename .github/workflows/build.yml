@@ -27,3 +27,8 @@ jobs:
     - name: Build
       working-directory: ./src
       run: dotnet publish ./illinois.csproj --configuration Release --os linux --output ../bin
+
+    - name: Prepare debian package
+      run: |
+        sed -i "s/\$\$AUTHOR\$\$/$GITHUB_ACTOR/g" ./debian/DEBIAN/control
+        sed -i "s/\$\$EMAIL\$\$/$GITHUB_ACTOR\@users.noreply.github.com/g" ./debian/DEBIAN/control
