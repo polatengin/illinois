@@ -1,0 +1,7 @@
+Package: illinois
+Version: 0.1-1
+Section: base
+Priority: optional
+Architecture: i386
+Maintainer: $$AUTHOR$$ <$$EMAIL$$>
+Description: Bicep documentation generator tool
