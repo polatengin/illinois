@@ -32,7 +32,3 @@ jobs:
       run: |
         sed -i "s/\$\$AUTHOR\$\$/$GITHUB_ACTOR/g" ./debian/DEBIAN/control
         sed -i "s/\$\$EMAIL\$\$/$GITHUB_ACTOR\@users.noreply.github.com/g" ./debian/DEBIAN/control
-
-    - name: Create debian package
-      run: dpkg-deb --build ./debian ./bin/illinois.deb
-
