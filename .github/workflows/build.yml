@@ -26,4 +26,4 @@ jobs:
 
     - name: Build
       working-directory: ./src
-      run: dotnet build --no-restore --configuration Release --output ../bin
+      run: dotnet publish ./illinois.csproj --configuration Release --os linux --output ../bin
