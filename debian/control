@@ -1,7 +1,7 @@
 Source: illinois
 Section: base
 Priority: optional
-Maintainer: Engin Polat <polatengin@users.noreply.github.com>
+Maintainer: Engin Polat <polatengin@hotmail.com>
 Build-Depends: debhelper-compat (= 11)
 Standards-Version: 4.5.0
 Homepage: https://github.com/polatengin/illinois
