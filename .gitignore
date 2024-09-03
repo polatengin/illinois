@@ -3,3 +3,9 @@ obj/
 
 debian/.debhelper/
 debian/illinois/
+
+debhelper-build-stamp
+files
+illinois.substvars
+
+illinois_*.tar.gz
