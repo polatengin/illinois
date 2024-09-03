@@ -1,7 +1,11 @@
-Package: illinois
-Version: 0.1-{COMMIT}
+Source: illinois
 Section: base
 Priority: optional
-Architecture: i386
 Maintainer: {AUTHOR} <{EMAIL}>
+Build-Depends: debhelper-compat (= 11)
+Standards-Version: 4.5.0
+Homepage: https://github.com/polatengin/illinois
+
+Package: illinois
+Architecture: any
 Description: Bicep documentation generator tool
