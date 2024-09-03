@@ -26,13 +26,7 @@ jobs:
 
     - name: Build
       working-directory: ./src
-      run: dotnet publish ./illinois.csproj --configuration Release --os linux --output ../bin
-
-    - name: Prepare debian package
-      run: |
-        sed -i "s/{COMMIT}/${GITHUB_RUN_ID}/g" ./DEBIAN/control
-        sed -i "s/{AUTHOR}/${GITHUB_ACTOR}/g" ./DEBIAN/control
-        sed -i "s/{EMAIL}/${GITHUB_ACTOR}@users.noreply.github.com/g" ./DEBIAN/control
+      run: dotnet publish ./illinois.csproj --configuration release --self-contained --runtime linux-x64 --output ../bin
 
     - name: Create debian package
       run: dpkg-deb --build ./ ./bin/illinois.deb
