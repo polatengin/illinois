@@ -29,7 +29,7 @@ jobs:
       run: dotnet publish ./illinois.csproj --configuration release --self-contained --runtime linux-x64 --output ../bin
 
     - name: Create debian package
-      run: dpkg-deb --build ./ ./bin/illinois.deb
+      run: debuild -us -uc
 
     - name: Upload debian package
       uses: actions/upload-artifact@v2
