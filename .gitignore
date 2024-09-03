@@ -1,2 +1,5 @@
 bin/
 obj/
+
+debian/.debhelper/
+debian/illinois/
