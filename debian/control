@@ -1,5 +1,5 @@
 Source: illinois
-Section: base
+Section: utils
 Priority: optional
 Maintainer: Engin Polat <polatengin@hotmail.com>
 Build-Depends: debhelper-compat (= 11)
