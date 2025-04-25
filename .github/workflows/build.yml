@@ -18,13 +18,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-
-    - name: Install dependencies
-      working-directory: ./src
-      run: |
-        sudo apt update
-        sudo apt install devscripts build-essential -y
+        dotnet-version: 9.0.x
 
     - name: Restore dependencies
       working-directory: ./src
@@ -34,11 +28,10 @@ jobs:
       working-directory: ./src
       run: dotnet publish ./illinois.csproj --configuration release --self-contained --runtime linux-x64 --output ../bin
 
-    - name: Create debian package
-      run: debuild -us -uc
-
-    - name: Upload debian package
-      uses: actions/upload-artifact@v2
-      with:
-        name: illinois
-        path: ./bin/illinois.deb
+    - name: Pack and Publish
+      working-directory: ./src
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
+      run: |
+        dotnet pack ./illinois.sln --configuration release
+        dotnet nuget push "./illinois/bin/release/illinois.*.nupkg" --source "https://api.nuget.org/v3/index.json" --skip-duplicate --api-key "${NUGET_AUTH_TOKEN}"
