@@ -15,10 +15,12 @@
     <Authors>Engin Polat</Authors>
     <PackageDescription>This is a tool to auto-generate documentation for a given bicep file</PackageDescription>
     <RepositoryUrl>https://github.com/polatengin/illinois</RepositoryUrl>
+    <PackageLicenseFile>../LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="../README.md" Pack="true" PackagePath="/" />
+    <None Include="../LICENSE" Pack="true" PackagePath="" />
 
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
   </ItemGroup>
