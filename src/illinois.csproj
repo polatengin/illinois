@@ -6,6 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>illinois</ToolCommandName>
+
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageId>illinois</PackageId>
     <Version>0.1.0</Version>
