@@ -15,7 +15,7 @@
     <Authors>Engin Polat</Authors>
     <PackageDescription>This is a tool to auto-generate documentation for a given bicep file</PackageDescription>
     <RepositoryUrl>https://github.com/polatengin/illinois</RepositoryUrl>
-    <PackageLicenseFile>../LICENSE</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
