@@ -22,7 +22,7 @@ dotnet tool install --global illinois
 dotnet run --project src/illinois.csproj -- --output-format markdown --bicep-file ./sample/main.bicep --sort
 ```
 
-> _Output of the command can be found in https://gist.github.com/polatengin/df3583b4f6b82432d5e926874e43bf89_
+> _Output of the command can be found in [https://gist.github.com/polatengin/df3583b4f6b82432d5e926874e43bf89](https://gist.github.com/polatengin/df3583b4f6b82432d5e926874e43bf89)_
 
 ## Usage
 
