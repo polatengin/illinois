@@ -7,10 +7,16 @@ This is a tool to generate documentation for given Bicep files/modules
 Run the following command to install the tool from nuget as a global tool:
 
 ```bash
-dotnet tool install -g illinois
+dotnet tool install --global illinois
 ```
 
-## Running the tool from source code
+> If the `illinois` tool is already installed, you can update it with the following command:
+>
+> ```bash
+> dotnet tool update --global illinois
+> ```
+
+## _Running the tool from source code_
 
 ```bash
 dotnet run --project src/illinois.csproj -- --output-format markdown --bicep-file ./sample/main.bicep --sort
