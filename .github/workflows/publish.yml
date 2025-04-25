@@ -1,4 +1,4 @@
-name: Build
+name: Publish
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  Publish:
 
     runs-on: ubuntu-latest
 
@@ -20,15 +20,7 @@ jobs:
       with:
         dotnet-version: 9.0.x
 
-    - name: Restore dependencies
-      working-directory: ./src
-      run: dotnet restore
-
-    - name: Build
-      working-directory: ./src
-      run: dotnet publish ./illinois.csproj --configuration Release --self-contained --runtime linux-x64 --output ../bin
-
-    - name: Pack and Publish
+    - name: Publish
       working-directory: ./src
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
