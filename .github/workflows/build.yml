@@ -33,5 +33,13 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
       run: |
+        current_version=$(curl -s https://api.nuget.org/v3-flatcontainer/illinois/index.json | jq -r '.versions | sort_by(split(".") | map(tonumber)) | .[-1]')
+        IFS='.' read -r major minor patch <<< "${current_version}"
+        patch=$((patch + 1))
+        new_version="$major.$minor.$patch"
+
+        echo "Bumping version to ${new_version}"
+        sed -i "s|<Version>.*</Version>|<Version>$new_version</Version>|" ./illinois.csproj
+
         dotnet pack ./illinois.sln --configuration Release
         dotnet nuget push "./bin/Release/illinois.*.nupkg" --source "https://api.nuget.org/v3/index.json" --skip-duplicate --api-key "${NUGET_AUTH_TOKEN}"
