@@ -360,6 +360,7 @@ internal class Program
       }
       #endregion
 
+      #region Outputs
       stream.Write(Encoding.UTF8.GetBytes($"## Outputs\n\n"));
       var outputs = root.outputs.EnumerateObject().ToList();
       if (sort)
@@ -380,6 +381,7 @@ internal class Program
           stream.Write(Encoding.UTF8.GetBytes($"> {description}\n\n"));
         }
       }
+      #endregion
 
       stream.Close();
     }
