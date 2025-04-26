@@ -119,6 +119,7 @@ internal class Program
       stream.Write(Encoding.UTF8.GetBytes($"## Table of Contents\n\n"));
 
       stream.Write(Encoding.UTF8.GetBytes($"- [Diagram](#diagram)\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"- [Metadata](#metadata)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Resource Types](#resource-types)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Variables](#variables)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Required Parameters](#required-parameters)\n"));
@@ -151,6 +152,20 @@ internal class Program
       }
       stream.Write(Encoding.UTF8.GetBytes($"```\n\n"));
       #endregion
+
+      #region Metadata
+      stream.Write(Encoding.UTF8.GetBytes($"## Metadata\n\n"));
+      var metadata = root.metadata.EnumerateObject().ToList().Where(e => e.Name != "_EXPERIMENTAL_WARNING" && e.Name != "_EXPERIMENTAL_FEATURES_ENABLED").ToList();
+      if (sort)
+      {
+        metadata = metadata.OrderBy(p => p.Name).ToList();
+      }
+      foreach (var item in metadata)
+      {
+        stream.Write(Encoding.UTF8.GetBytes($"<details>\n<summary>{item.Name}</summary>\nDefault value: {item.Value}\n</details>\n\n"));
+      }
+      #endregion
+
       #region Resource Types
       var resourceTypes = new List<(string, string)>();
       foreach (var item in root.resources.EnumerateObject().Select(e => e.Value))
