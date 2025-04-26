@@ -253,7 +253,7 @@ module propertyLoopInsideParameterValueWithIndexes 'module_a.bicep' = {
   }
 }
 
-module propertyLoopInsideParameterValueInsideModuleLoop 'module_a.bicep' = [for thing in range(0,1): {
+module propertyLoopInsideParameterValueInsideModuleLoop 'module_a.bicep' = [for thing in range(1,2): {
   name: 'propertyLoopInsideParameterValueInsideModuleLoop'
   params: {
     objParam: {
