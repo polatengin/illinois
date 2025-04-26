@@ -260,6 +260,7 @@ internal class Program
       }
       #endregion
 
+      #region Required Parameters
       stream.Write(Encoding.UTF8.GetBytes($"## Required Parameters\n\n"));
       var required_parameters = root.parameters.EnumerateObject().Where(e => e.Value.TryGetProperty("defaultValue", out _) == false).ToList();
       if (sort)
@@ -283,6 +284,7 @@ internal class Program
         stream.Write(Encoding.UTF8.GetBytes($"| {name} | {propertyType} | {description} |"));
       }
       stream.Write(Encoding.UTF8.GetBytes($"\n"));
+      #endregion
 
       stream.Write(Encoding.UTF8.GetBytes($"## Optional Parameters\n\n"));
       var optional_parameters = root.parameters.EnumerateObject().Where(e => e.Value.TryGetProperty("defaultValue", out _) == true).ToList();
