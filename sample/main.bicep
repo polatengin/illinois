@@ -275,6 +275,16 @@ module propertyLoopInsideParameterValueInsideModuleLoop 'module_a.bicep' = [for 
   }
 }]
 
+func buildUrl(https bool, hostname string, path string) string => '${https ? 'https' : 'http'}://${hostname}${empty(path) ? '' : '/${path}'}'
+
+func arrayReturnType(name string) array => [
+  name
+]
+func func_test1() object => loadJsonContent('./bicepconfig.json')
+func func_test2() string => loadTextContent('./bicepconfig.json')
+func func_test3() object => loadYamlContent('./bicepconfig.json')
+func func_test4() string => loadFileAsBase64('./bicepconfig.json')
+
 resource kv 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
   name: 'testkeyvault'
 }
