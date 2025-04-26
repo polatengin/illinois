@@ -246,6 +246,8 @@ internal class Program
         stream.Write(Encoding.UTF8.GetBytes($"- {name} (_Type: {type}_)\n\n"));
       }
       #endregion
+
+      #region Variables
       stream.Write(Encoding.UTF8.GetBytes($"## Variables\n\n"));
       var variables = root.variables.EnumerateObject().ToList();
       if (sort)
@@ -256,6 +258,7 @@ internal class Program
       {
         stream.Write(Encoding.UTF8.GetBytes($"<details>\n<summary>{item.Name}</summary>\nDefault value: {item.Value}\n</details>\n\n"));
       }
+      #endregion
 
       stream.Write(Encoding.UTF8.GetBytes($"## Required Parameters\n\n"));
       var required_parameters = root.parameters.EnumerateObject().Where(e => e.Value.TryGetProperty("defaultValue", out _) == false).ToList();
