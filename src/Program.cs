@@ -100,13 +100,18 @@ internal class Program
 
       stream.Write(Encoding.UTF8.GetBytes($"# {bicepFile.Name}\n\n"));
 
-      if (root.metadata != null && root.metadata._EXPERIMENTAL_FEATURES_ENABLED.Any())
+      if (root.metadata.TryGetProperty("_EXPERIMENTAL_WARNING", out var experimentalWarning))
       {
-        stream.Write(Encoding.UTF8.GetBytes($"> {root.metadata._EXPERIMENTAL_WARNING}\n\n"));
+        var warningMessage = experimentalWarning.GetString() ?? "";
+        stream.Write(Encoding.UTF8.GetBytes($"> {warningMessage}\n\n"));
         stream.Write(Encoding.UTF8.GetBytes($"_Enabled experimental features:_\n\n"));
-        foreach (var item in root.metadata._EXPERIMENTAL_FEATURES_ENABLED)
+        root.metadata.TryGetProperty("_EXPERIMENTAL_FEATURES_ENABLED", out var experimentalFeaturesEnabled);
+        if (experimentalFeaturesEnabled.ValueKind == JsonValueKind.Array)
         {
-          stream.Write(Encoding.UTF8.GetBytes($"- {item}\n"));
+          foreach (var item in experimentalFeaturesEnabled.EnumerateArray())
+          {
+            stream.Write(Encoding.UTF8.GetBytes($"- {item}\n"));
+          }
         }
         stream.Write(Encoding.UTF8.GetBytes($"\n"));
       }
