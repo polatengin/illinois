@@ -358,6 +358,74 @@ module withSpace 'module_d.bicep' = {
   name: 'withSpace'
 }
 
-module withSeparateConfig './module_g.bicep' = {
-  name: 'withSeparateConfig'
+metadata myString2 = 'string value'
+metadata myInt2 = 42
+metadata myTruth = true
+metadata myMultiLineString = '''
+  This is a multi line string // with comments,
+  blocked ${interpolation},
+  and a /* newline.
+  */
+'''
+
+metadata foo = {
+  enabled: true
+  name: 'this is my object'
+  priority: 3
+  info: {
+    a: 'b'
+  }
+  empty: {
+  }
+  array: [
+    'string item'
+    12
+    true
+    [
+      'inner'
+      false
+    ]
+    {
+      a: 'b'
+    }
+  ]
+}
+
+metadata myArrayMetadata = [
+  'a'
+  'b'
+  'c'
+]
+
+type foo = resourceInput<'Microsoft.Storage/storageAccounts@2023-01-01'>.name
+
+type test = {
+  resA: resourceInput<'Microsoft.Storage/storageAccounts@2023-01-01'>.name
+  resB: sys.resourceInput<'Microsoft.Storage/storageAccounts@2022-09-01'>.name
+  resC: sys.array
+  resD: sys.resourceInput<'az:Microsoft.Storage/storageAccounts@2022-09-01'>.name
+}
+
+type strangeFormatting = {
+  test: resourceInput<
+
+  'Astronomer.Astro/organizations@2023-08-01-preview'
+
+>.name
+  test2: resourceInput    <'Microsoft.Storage/storageAccounts@2023-01-01'>.name
+  test3: resourceInput</*    */'Microsoft.Storage/storageAccounts@2023-01-01'/*     */>.name
+}
+
+@description('I love space(s)')
+type test2 = resourceInput<
+
+     'Astronomer.Astro/organizations@2023-08-01-preview'
+
+>.name
+
+param bar resourceInput<'Microsoft.Resources/tags@2022-09-01'>.properties = {
+  tags: {
+    fizz: 'buzz'
+    snap: 'crackle'
+  }
 }
