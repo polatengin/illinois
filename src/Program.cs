@@ -121,6 +121,7 @@ internal class Program
       stream.Write(Encoding.UTF8.GetBytes($"- [Diagram](#diagram)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Metadata](#metadata)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Resource Types](#resource-types)\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"- [User Defined Functions](#user-defined-functions)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Variables](#variables)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Required Parameters](#required-parameters)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Optional Parameters](#optional-parameters)\n"));
@@ -198,6 +199,34 @@ internal class Program
         stream.Write(Encoding.UTF8.GetBytes($"| {propertyType} | [{apiVersion}](https://learn.microsoft.com/en-us/azure/templates/{resourceType}/{apiVersion}/{subType}) |\n"));
       }
       stream.Write(Encoding.UTF8.GetBytes($"\n"));
+      #endregion
+
+      #region User Defined Functions
+      stream.Write(Encoding.UTF8.GetBytes($"## User Defined Functions\n\n"));
+
+      if (!root.functions.Any())
+      {
+        stream.Write(Encoding.UTF8.GetBytes($"No user defined functions found\n\n"));
+      }
+      else
+      {
+        var functions = root.functions.FirstOrDefault()!;
+        var members = functions["members"];
+        var functionsList = members?.AsObject().AsEnumerable() ?? [];
+        foreach (var item in functionsList)
+        {
+          // var parameters = string.Empty;
+          // foreach (var parameter in item.Value.AsObject().Where(p => p.Key == "parameters").Select(e => e.Value))
+          // {
+          //   var name = parameter.AsObject().FirstOrDefault(p => p.Key == "name").Value ?? "";
+          //   var type = parameter.AsObject().FirstOrDefault(p => p.Key == "type").Value ?? "";
+          //   var description = parameter.AsObject().FirstOrDefault(p => p.Key == "description").Value ?? "";
+
+          //   parameters += $"- {name} ({type}) - {description}\n";
+          // }
+          stream.Write(Encoding.UTF8.GetBytes($"- {item.Key}()\n\n"));
+        }
+      }
       #endregion
       stream.Write(Encoding.UTF8.GetBytes($"## Variables\n\n"));
       var variables = root.variables.EnumerateObject().ToList();
