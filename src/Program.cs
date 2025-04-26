@@ -80,7 +80,8 @@ internal class Program
     process.StartInfo.FileName = "az";
     process.StartInfo.Arguments = $"bicep build --file {bicepFile} --outfile {tempFile}";
     process.StartInfo.UseShellExecute = false;
-    process.StartInfo.RedirectStandardOutput = false;
+    process.StartInfo.RedirectStandardOutput = true;
+    process.StartInfo.RedirectStandardError = true;
     process.Start();
 
     process.WaitForExit();
