@@ -320,6 +320,7 @@ internal class Program
       stream.Write(Encoding.UTF8.GetBytes($"\n"));
       #endregion
 
+      #region Resources
       stream.Write(Encoding.UTF8.GetBytes($"## Resources\n\n"));
       var resources = root.resources.EnumerateObject().ToList();
       if (sort)
@@ -357,6 +358,7 @@ internal class Program
           stream.Write(Encoding.UTF8.GetBytes($"\n"));
         }
       }
+      #endregion
 
       stream.Write(Encoding.UTF8.GetBytes($"## Outputs\n\n"));
       var outputs = root.outputs.EnumerateObject().ToList();
