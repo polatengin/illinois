@@ -9,7 +9,7 @@
         "type": "dotnet",
         "task": "build"
       },
-      "program": "${workspaceFolder}/src/bin/Debug/net8.0/illinois.dll",
+      "program": "${workspaceFolder}/src/bin/Debug/net9.0/illinois.dll",
       "args": [
         "--output-format",
         "markdown",
