@@ -286,6 +286,7 @@ internal class Program
       stream.Write(Encoding.UTF8.GetBytes($"\n"));
       #endregion
 
+      #region Optional Parameters
       stream.Write(Encoding.UTF8.GetBytes($"## Optional Parameters\n\n"));
       var optional_parameters = root.parameters.EnumerateObject().Where(e => e.Value.TryGetProperty("defaultValue", out _) == true).ToList();
       if (sort)
@@ -298,17 +299,26 @@ internal class Program
       {
         var name = item.Name;
         var propertyType = item.Value.GetProperty("type").GetString();
-        var property = item.Value.EnumerateObject().Where(p => p.Name == "metadata");
+        var metadataProperty = item.Value.EnumerateObject().Where(p => p.Name == "metadata");
         var description = "";
 
-        if (property.Any())
+        if (metadataProperty.Any())
         {
-          description = property.First().Value.GetProperty("description").GetString();
+          var success = metadataProperty.First().Value.TryGetProperty("description", out var descriptionProperty);
+          if (success)
+          {
+            description = descriptionProperty.GetString();
+          }
+          else
+          {
+            description = string.Empty;
+          }
         }
 
         stream.Write(Encoding.UTF8.GetBytes($"| {name} | {propertyType} | {description} |\n"));
       }
       stream.Write(Encoding.UTF8.GetBytes($"\n"));
+      #endregion
 
       stream.Write(Encoding.UTF8.GetBytes($"## Resources\n\n"));
       var resources = root.resources.EnumerateObject().ToList();
