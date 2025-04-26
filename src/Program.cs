@@ -128,15 +128,7 @@ internal class Program
 
       stream.Write(Encoding.UTF8.GetBytes($"\n"));
 
-      var resourceTypes = new List<(string, string)>();
-      foreach (var item in root.resources.EnumerateObject().Select(e => e.Value))
-      {
-        var propertyType = item.GetProperty("type").GetString() ?? "";
-        var apiVersion = item.GetProperty("apiVersion").GetString() ?? "";
-
-        resourceTypes.Add((propertyType, apiVersion));
-      }
-
+      #region Diagram
       stream.Write(Encoding.UTF8.GetBytes($"## Diagram\n\n"));
       stream.Write(Encoding.UTF8.GetBytes($"```mermaid\n"));
       stream.Write(Encoding.UTF8.GetBytes($"graph TD;\n"));
@@ -158,6 +150,16 @@ internal class Program
         });
       }
       stream.Write(Encoding.UTF8.GetBytes($"```\n\n"));
+      #endregion
+      #region Resource Types
+      var resourceTypes = new List<(string, string)>();
+      foreach (var item in root.resources.EnumerateObject().Select(e => e.Value))
+      {
+        var propertyType = item.GetProperty("type").GetString() ?? "";
+        var apiVersion = item.GetProperty("apiVersion").GetString() ?? "";
+
+        resourceTypes.Add((propertyType, apiVersion));
+      }
 
       stream.Write(Encoding.UTF8.GetBytes($"## Resource Types\n\n"));
       stream.Write(Encoding.UTF8.GetBytes($"Resource Types used in the bicep file\n\n"));
@@ -181,7 +183,7 @@ internal class Program
         stream.Write(Encoding.UTF8.GetBytes($"| {propertyType} | [{apiVersion}](https://learn.microsoft.com/en-us/azure/templates/{resourceType}/{apiVersion}/{subType}) |\n"));
       }
       stream.Write(Encoding.UTF8.GetBytes($"\n"));
-
+      #endregion
       stream.Write(Encoding.UTF8.GetBytes($"## Variables\n\n"));
       var variables = root.variables.EnumerateObject().ToList();
       if (sort)
