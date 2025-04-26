@@ -122,6 +122,7 @@ internal class Program
       stream.Write(Encoding.UTF8.GetBytes($"- [Metadata](#metadata)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Resource Types](#resource-types)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [User Defined Functions](#user-defined-functions)\n"));
+      stream.Write(Encoding.UTF8.GetBytes($"- [User Defined Types](#user-defined-types)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Variables](#variables)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Required Parameters](#required-parameters)\n"));
       stream.Write(Encoding.UTF8.GetBytes($"- [Optional Parameters](#optional-parameters)\n"));
@@ -226,6 +227,23 @@ internal class Program
           // }
           stream.Write(Encoding.UTF8.GetBytes($"- {item.Key}()\n\n"));
         }
+      }
+      #endregion
+
+      #region User Defined Types
+      stream.Write(Encoding.UTF8.GetBytes($"## User Defined Types\n\n"));
+
+      var types = root.definitions.EnumerateObject().ToList();
+      if (sort)
+      {
+        types = types.OrderBy(p => p.Name).ToList();
+      }
+      foreach (var item in types)
+      {
+        var name = item.Name;
+        var type = item.Value.GetProperty("type").GetString() ?? "";
+
+        stream.Write(Encoding.UTF8.GetBytes($"- {name} (_Type: {type}_)\n\n"));
       }
       #endregion
       stream.Write(Encoding.UTF8.GetBytes($"## Variables\n\n"));
